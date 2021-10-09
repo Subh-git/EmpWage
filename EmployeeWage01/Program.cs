@@ -13,6 +13,7 @@ namespace EmployeeWage01
         public const int IS_PART_TIME = 2;
         public const int EMP_RATE_PER_HOUR = 20;
         public const int NUM_OF_WORKING_DAYS = 20;
+        public const int MAX_HRS_IN_MONTH = 100;
         static void Main(string[] args)
         {
             //Console.WriteLine("Welcome to the Employee Wage computation program");            
@@ -20,10 +21,12 @@ namespace EmployeeWage01
             int empHrs = 0;
             int empWage = 0;
             int totalEmpWage = 0;
-            int day;
+            int maxHrs = 0;
+            int maxDay = 0;
 
-            for (day = 1; day <= NUM_OF_WORKING_DAYS; day++)  //for loop to iterate through 20 days
+           while(maxHrs < MAX_HRS_IN_MONTH && maxDay < NUM_OF_WORKING_DAYS)  //while loop to check which condition meets first
             {
+                maxDay++;
 
                 Random random = new Random(); //Random object creation
 
@@ -46,10 +49,13 @@ namespace EmployeeWage01
 
 
                 }
-                empWage = empHrs * EMP_RATE_PER_HOUR;
+                maxHrs += empHrs; //incrementing employee hours
+                empWage = empHrs * EMP_RATE_PER_HOUR; 
                 totalEmpWage += empWage;
-                Console.WriteLine("Employee Wage: {0} and Day: {1} ", empWage, day);
+                Console.WriteLine("Day {0} and hours {1}",maxDay,maxHrs);
             }
+            empWage = empHrs * EMP_RATE_PER_HOUR;
+            totalEmpWage += empWage;
             Console.WriteLine("Total Employee Wage : " + totalEmpWage);
         }
     }
