@@ -14,8 +14,11 @@ namespace EmployeeWage01
         public const int EMP_RATE_PER_HOUR = 20;
         public const int NUM_OF_WORKING_DAYS = 20;
         public const int MAX_HRS_IN_MONTH = 100;
-        static void Main(string[] args)
+
+        //defining the class method ComputeEmpWage()
+        public static int ComputeEmpWage()
         {
+
             //Console.WriteLine("Welcome to the Employee Wage computation program");            
             //Variables
             int empHrs = 0;
@@ -24,7 +27,7 @@ namespace EmployeeWage01
             int maxHrs = 0;
             int maxDay = 0;
 
-           while(maxHrs < MAX_HRS_IN_MONTH && maxDay < NUM_OF_WORKING_DAYS)  //while loop to check which condition meets first
+            while (maxHrs < MAX_HRS_IN_MONTH && maxDay < NUM_OF_WORKING_DAYS)  //while loop to check which condition meets first
             {
                 maxDay++;
 
@@ -50,13 +53,19 @@ namespace EmployeeWage01
 
                 }
                 maxHrs += empHrs; //incrementing employee hours
-                empWage = empHrs * EMP_RATE_PER_HOUR; 
+                empWage = empHrs * EMP_RATE_PER_HOUR;
                 totalEmpWage += empWage;
-                Console.WriteLine("Day {0} and hours {1}",maxDay,maxHrs);
+                Console.WriteLine("Day {0} and hours {1}", maxDay, maxHrs);
             }
             empWage = empHrs * EMP_RATE_PER_HOUR;
             totalEmpWage += empWage;
             Console.WriteLine("Total Employee Wage : " + totalEmpWage);
+            return totalEmpWage;
+
+        }
+        static void Main(string[] args)
+        {
+            ComputeEmpWage();   
         }
     }
 }
