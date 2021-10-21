@@ -8,12 +8,13 @@ namespace EmployeeWage01
         
         static void Main(string[] args)
         {
-            EmpWageBuilderObject dMart = new EmpWageBuilderObject("DMart", 2, 10, 20);
-            EmpWageBuilderObject Ford = new EmpWageBuilderObject("Ford", 5, 15, 30);
-            dMart.ComputeEmpWage();
-            Ford.ComputeEmpWage();
-            Console.WriteLine(dMart.toString());
-            Console.WriteLine(Ford.toString());
+            //creating an array class object
+            //calling all the necessary methods of different classes
+            EmpWageBuilderArray empWageBuilder = new EmpWageBuilderArray();
+            empWageBuilder.addCompanyEmpWage("DMart", 4, 7, 30);
+            empWageBuilder.addCompanyEmpWage("Reliance", 5, 30, 25);
+            empWageBuilder.addCompanyEmpWage("Ford",5,20,35);
+            empWageBuilder.computeEmpWage();
         }
     }
 }
