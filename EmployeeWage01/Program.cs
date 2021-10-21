@@ -11,10 +11,10 @@ namespace EmployeeWage01
             int IS_FULL_TIME = 1;
             int EMP_RATE_PER_HOUR = 20;
 
-            //Variables
+            //Variables declaration
             int empHrs = 0;
             int empWage = 0;
-            Random random = new Random(); //Random object creation
+            Random random = new Random(); //Random object creation     
 
             //Computation
             int empCheck = random.Next(0, 2);
