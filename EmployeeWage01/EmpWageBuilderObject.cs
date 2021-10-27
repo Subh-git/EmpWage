@@ -16,7 +16,7 @@ namespace EmployeeWage01
         /// <param name="maxWorkingHrs">The maximum working HRS.</param>
         /// <param name="empRate">The emp rate.</param>
         public void addCompanyEmpWage(string companyName, int maxWorkingDay, int maxWorkingHrs, int empRate);
-        public void computeEmpWage();
+        public void computeEmpWage();                       //method declaration as in innterface, we cant define the methods as of that in abstract class
 
 
     }
@@ -65,7 +65,7 @@ namespace EmployeeWage01
                 //used predefined Random class
                 Random attendance = new Random();
                 int empInput = attendance.Next(0, 3);
-                //various switch cases to access theempInput and change the emp hours accordingly
+                //various switch cases to access the empInput and change the emp hours accordingly
                 switch (empInput)
                 {
                     case IS_FULL_TIME:
@@ -84,11 +84,13 @@ namespace EmployeeWage01
 
                 // Formula for calculating employe wage
                 empWage = Company.empRate * empHr;
+                Company.dailyWage = empWage;
                 //formula for calculating total emloyee wage
                 Company.totalEmpWage = Company.totalEmpWage + empWage;
                 //incrementation
                 totalWorkingDay++;
                 totalWorkingHrs = totalWorkingHrs + empHr;
+                Console.WriteLine("The daily emp Wage for {0} is {1}- " ,Company.companyName, Company.dailyWage);
 
             }
 
@@ -106,6 +108,7 @@ namespace EmployeeWage01
         public int maxWorkingHrs;
         public int totalEmpWage;
         public string companyName;
+        public int dailyWage;
 
         //Constructor declaration
         public CompanyEmpWage(string companyName, int maxWorkingDay, int maxWorkingHrs, int empRate)
