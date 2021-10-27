@@ -17,38 +17,40 @@ namespace EmployeeWage01
         /// <param name="empRate">The emp rate.</param>
         public void addCompanyEmpWage(string companyName, int maxWorkingDay, int maxWorkingHrs, int empRate);
         public void computeEmpWage();                       //method declaration as in innterface, we cant define the methods as of that in abstract class
-
+        public int getTotalWage(string company);
 
     }
-    public class EmpWageBuilderArray : IComputeEmpWage                     //inheriting from the interfce class
+    public class EmpWageBuilder : IComputeEmpWage                     //inheriting from the interfce class
     {
         //constants
         public const int IS_FULL_TIME = 1;
         public const int IS_PART_TIME = 2;
 
-        private int numOfCompany = 0;                                    //works as the pointer for array(index)
-        private CompanyEmpWage[] companyEmpWageArray;                    //initialising the array of the referrence type CompanyEmpWage class which holds 
+        private Dictionary<string, CompanyEmpWage> companyToEmpWageMap;  //initialising the dictionary object with string as key and the companyempwage class as value
+        private LinkedList<CompanyEmpWage> companyEmpWageList;           //initialising the Linkedlist of the referrence type CompanyEmpWage class which holds 
                                                                          //all the data about the various variables in it.
 
-        public EmpWageBuilderArray()                                    //declaring the array size 
+        public EmpWageBuilder()                                    //declaring the array size 
         {
-            this.companyEmpWageArray = new CompanyEmpWage[5];
+            this.companyEmpWageList = new LinkedList<CompanyEmpWage>();
+            this.companyToEmpWageMap = new Dictionary<string, CompanyEmpWage>();
         }
 
         //method to insert into the array
         public void addCompanyEmpWage(string companyName, int maxWorkingDay, int maxWorkingHrs, int empRate)  //completeing the interfaced method
         {
-            companyEmpWageArray[this.numOfCompany] = new CompanyEmpWage(companyName, maxWorkingDay, maxWorkingHrs, empRate);    //incrementing the array
-            numOfCompany++;
+            CompanyEmpWage companyEmpWage = new CompanyEmpWage(companyName, maxWorkingDay, maxWorkingHrs, empRate); //creating emp wage object of the company emp wage class
+            this.companyEmpWageList.AddLast(companyEmpWage);
+            this.companyToEmpWageMap.Add(companyName, companyEmpWage);
 
-            //one array index element/object can be used to call mutilple variables of CompanyEmpWage class  
+            //in the above lines of code we are putting the add methods in both the lisrt and dictionary
         }
         public void computeEmpWage()                                                     //similar method like compute emp wage just that it fethces a single element and then finds out its respected emp wage(total)
         {
-            for (int i = 0; i < numOfCompany; i++)
+            foreach(CompanyEmpWage companyEmpWage in this.companyEmpWageList)
             {
-                companyEmpWageArray[i].setTotalEmpWage(this.ComputeEmpWage(this.companyEmpWageArray[i]));
-                Console.WriteLine(this.companyEmpWageArray[i].toString());
+                companyEmpWage.setTotalEmpWage(this.ComputeEmpWage(companyEmpWage));    //this will fetch the companyEmpWage object from the list,and the ComputeEmpWage method will execute its job with the help of the object's variable
+                Console.WriteLine(companyEmpWage.toString());
             }
         }
 
@@ -84,19 +86,22 @@ namespace EmployeeWage01
 
                 // Formula for calculating employe wage
                 empWage = Company.empRate * empHr;
-                Company.dailyWage = empWage;
                 //formula for calculating total emloyee wage
                 Company.totalEmpWage = Company.totalEmpWage + empWage;
                 //incrementation
                 totalWorkingDay++;
                 totalWorkingHrs = totalWorkingHrs + empHr;
-                Console.WriteLine("The daily emp Wage for {0} is {1}- " ,Company.companyName, Company.dailyWage);
 
             }
 
             Console.WriteLine("Total Working Days: {0}, Total Working Hrs: {1}", totalWorkingDay, totalWorkingHrs);
             return Company.totalEmpWage;
 
+        }
+
+        public int getTotalWage(string company)
+        {
+            return this.companyToEmpWageMap[company].totalEmpWage;
         }
     }
 }
@@ -108,7 +113,6 @@ namespace EmployeeWage01
         public int maxWorkingHrs;
         public int totalEmpWage;
         public string companyName;
-        public int dailyWage;
 
         //Constructor declaration
         public CompanyEmpWage(string companyName, int maxWorkingDay, int maxWorkingHrs, int empRate)
